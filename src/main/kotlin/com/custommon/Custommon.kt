@@ -14,7 +14,9 @@ data class Custommon(
     val height: Double,
     val category: String,
     val weight: Double,
-    val passiveAbility: String,
+
+    @ElementCollection
+    val passiveAbility: List<String>,
 
     @ElementCollection
     @CollectionTable(name = "custommon_sexes", joinColumns = [JoinColumn(name = "custommon_id")])
