@@ -1,7 +1,30 @@
 package com.custommon
 
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
-class CustommonService {
+class CustommonService(
+    private val repository: CustommonRepository
+) {
+    fun getAllCustommons(): List<Custommon>? {
+        return repository.findAll()
+    }
+
+    fun getCustommonById(custommonId: Int): Optional<Custommon> {
+        return repository.findById(custommonId)
+    }
+
+    fun addCustommon(custommon: Custommon): Custommon? {
+        return repository.save(custommon)
+    }
+
+    fun removeCustommonById(custommonId: Int): Boolean {
+        val exists = repository.existsById(custommonId)
+        if (exists) {
+            repository.deleteById(custommonId)
+            return true
+        }
+        return false
+    }
 }
