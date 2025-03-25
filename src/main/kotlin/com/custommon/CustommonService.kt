@@ -16,7 +16,8 @@ class CustommonService(
     }
 
     fun addCustommon(custommon: Custommon): Custommon? {
-        return repository.save(custommon)
+        val updatedCustommon = custommon.copy(weaknesses = Type.getWeaknesses(custommon.types))
+        return repository.save(updatedCustommon)
     }
 
     fun removeCustommonById(custommonId: Int): Boolean {

@@ -7,7 +7,7 @@ import jakarta.persistence.*
 data class Custommon(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int? = null,
+    val id: Int,
 
     val name: String,
     val description: String,
@@ -24,5 +24,9 @@ data class Custommon(
     @ElementCollection
     @CollectionTable(name = "custommon_types", joinColumns = [JoinColumn(name = "custommon_id")])
     @Enumerated(EnumType.STRING)
-    val types: List<Type>
+    val types: List<Type>,
+
+    @ElementCollection
+    @Enumerated(EnumType.STRING)
+    val weaknesses: List<Type> = emptyList()
 )
