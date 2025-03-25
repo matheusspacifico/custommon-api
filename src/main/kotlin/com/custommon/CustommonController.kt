@@ -18,8 +18,7 @@ class CustommonController(
     @GetMapping("/{custommonId}")
     fun getCustommonById(@PathVariable("custommonId") custommonId: Int): ResponseEntity<Custommon> {
         val custommon = custommonService.getCustommonById(custommonId)
-        if (custommon != null) return ResponseEntity.ok(custommon)
-        return ResponseEntity.notFound().build()
+        return custommon.map { ResponseEntity.ok(it) }.orElseGet { ResponseEntity.notFound().build() }
     }
 
     @PostMapping
@@ -30,8 +29,8 @@ class CustommonController(
 
     @DeleteMapping("/{custommonId}")
     fun deleteCustommon(@PathVariable("custommonId") custommonId: Int): ResponseEntity<Unit> {
-        val removedCustommon = custommonService.removeCustommon(custommonId)
-        if (removedCustommon) return ResponseEntity.noContent().build()
+        val gotRemoved = custommonService.removeCustommonById(custommonId)
+        if (gotRemoved) return ResponseEntity.noContent().build()
         return ResponseEntity.notFound().build()
     }
 }
